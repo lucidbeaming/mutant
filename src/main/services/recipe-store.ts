@@ -3,6 +3,11 @@ import { app } from 'electron'
 import { join } from 'path'
 import { randomUUID } from 'crypto'
 import type { OutputConfig, RecipeSummary } from '../../shared/types'
+import {
+  DEFAULT_GLITCH_CONFIG,
+  DEFAULT_SPEED_CONFIG,
+  DEFAULT_IMAGE_SEQUENCE_CONFIG
+} from '../../shared/types'
 
 let db: Database.Database
 
@@ -33,7 +38,13 @@ export function loadRecipe(id: string): OutputConfig[] | null {
     | { outputs: string }
     | undefined
   if (!row) return null
-  return JSON.parse(row.outputs)
+  const configs: OutputConfig[] = JSON.parse(row.outputs)
+  return configs.map((c) => ({
+    ...c,
+    glitch: c.glitch ?? { ...DEFAULT_GLITCH_CONFIG },
+    speed: c.speed ?? { ...DEFAULT_SPEED_CONFIG },
+    imageSequence: c.imageSequence ?? { ...DEFAULT_IMAGE_SEQUENCE_CONFIG }
+  }))
 }
 
 export function saveRecipe(name: string, outputs: OutputConfig[]): string {

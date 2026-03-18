@@ -13,7 +13,16 @@ import type { MediaFile, OutputConfig } from '../../shared/types'
 import { DEFAULT_OUTPUT_CONFIG } from '../../shared/types'
 
 function createOutputConfig(): OutputConfig {
-  return { ...DEFAULT_OUTPUT_CONFIG, id: randomUUID(), resize: { ...DEFAULT_OUTPUT_CONFIG.resize }, colorSpace: { ...DEFAULT_OUTPUT_CONFIG.colorSpace }, filename: { ...DEFAULT_OUTPUT_CONFIG.filename } }
+  return {
+    ...DEFAULT_OUTPUT_CONFIG,
+    id: randomUUID(),
+    resize: { ...DEFAULT_OUTPUT_CONFIG.resize },
+    colorSpace: { ...DEFAULT_OUTPUT_CONFIG.colorSpace },
+    glitch: { ...DEFAULT_OUTPUT_CONFIG.glitch },
+    speed: { ...DEFAULT_OUTPUT_CONFIG.speed },
+    imageSequence: { ...DEFAULT_OUTPUT_CONFIG.imageSequence },
+    filename: { ...DEFAULT_OUTPUT_CONFIG.filename }
+  }
 }
 
 export default function App() {
