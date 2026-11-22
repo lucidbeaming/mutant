@@ -78,12 +78,18 @@ export interface RecipeSummary {
 }
 
 export const IMAGE_EXTENSIONS = [
-  '.jpg', '.jpeg', '.png', '.webp', '.avif', '.tiff', '.tif', '.bmp', '.gif'
+  '.jpg',
+  '.jpeg',
+  '.png',
+  '.webp',
+  '.avif',
+  '.tiff',
+  '.tif',
+  '.bmp',
+  '.gif'
 ]
 
-export const VIDEO_EXTENSIONS = [
-  '.mp4', '.mov', '.avi', '.mkv', '.webm', '.m4v', '.mxf', '.prores'
-]
+export const VIDEO_EXTENSIONS = ['.mp4', '.mov', '.avi', '.mkv', '.webm', '.m4v', '.mxf', '.prores']
 
 export const IMAGE_FORMATS = ['jpg', 'png', 'webp', 'avif', 'tiff']
 export const VIDEO_FORMATS = ['h264-web', 'prores', 'webm', 'mov-h264']

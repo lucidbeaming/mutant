@@ -26,7 +26,12 @@ export function FormatSelector({ format, proresProfile, onChange, disabled }: Pr
       <div className="format-selector">
         <select
           value={format}
-          onChange={(e) => onChange(e.target.value, e.target.value === 'prores' ? proresProfile || '422' : undefined)}
+          onChange={(e) =>
+            onChange(
+              e.target.value,
+              e.target.value === 'prores' ? proresProfile || '422' : undefined
+            )
+          }
           disabled={disabled}
         >
           <optgroup label="Image">

@@ -1,4 +1,10 @@
-import type { ToolStatus, MediaFile, OutputConfig, ProcessingProgress, RecipeSummary } from '../shared/types'
+import type {
+  ToolStatus,
+  MediaFile,
+  OutputConfig,
+  ProcessingProgress,
+  RecipeSummary
+} from '../shared/types'
 import type { ElectronAPI } from '@electron-toolkit/preload'
 
 interface MutantAPI {

@@ -64,7 +64,8 @@ export function RecipeManager({ outputs, onLoad, disabled }: Props) {
         {recipes.length > 0 && (
           <select
             onChange={(e) => {
-              if (e.target.value) handleDelete(new MouseEvent('click') as unknown as React.MouseEvent, e.target.value)
+              if (e.target.value)
+                handleDelete(new MouseEvent('click') as unknown as React.MouseEvent, e.target.value)
               e.target.value = ''
             }}
             disabled={disabled}

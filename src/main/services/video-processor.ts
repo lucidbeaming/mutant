@@ -153,9 +153,7 @@ function attachProgressAndRun(
       .on('progress', (progress) => {
         if (onProgress) {
           const pct =
-            typeof progress.percent === 'number' && !isNaN(progress.percent)
-              ? progress.percent
-              : 0
+            typeof progress.percent === 'number' && !isNaN(progress.percent) ? progress.percent : 0
           onProgress(pct)
         }
       })
@@ -250,7 +248,7 @@ export async function processImageSequence(
 
   const lines: string[] = []
   for (const p of imagePaths) {
-    const escaped = p.replace(/'/g, "'\\''" )
+    const escaped = p.replace(/'/g, "'\\''")
     lines.push(`file '${escaped}'`)
     lines.push(`duration ${duration}`)
   }
@@ -262,9 +260,7 @@ export async function processImageSequence(
   await writeFile(listFile, lines.join('\n'))
 
   try {
-    let cmd = ffmpeg()
-      .input(listFile)
-      .inputOptions(['-f', 'concat', '-safe', '0'])
+    let cmd = ffmpeg().input(listFile).inputOptions(['-f', 'concat', '-safe', '0'])
 
     // Build filters: resize + ensure even dimensions for encoding
     const filters = buildBaseFilters(config)
