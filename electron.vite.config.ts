@@ -1,19 +1,13 @@
 import { resolve } from 'path'
-import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
+import { defineConfig } from 'electron-vite'
 import react from '@vitejs/plugin-react'
 
+// electron-vite 6 externalizes dependencies for main and preload by default
+// (build.externalizeDeps), so fluent-ffmpeg, gm and better-sqlite3 stay
+// unbundled and load from node_modules at runtime.
 export default defineConfig({
-  main: {
-    plugins: [externalizeDepsPlugin()],
-    build: {
-      rollupOptions: {
-        external: ['fluent-ffmpeg', 'gm', 'better-sqlite3']
-      }
-    }
-  },
-  preload: {
-    plugins: [externalizeDepsPlugin()]
-  },
+  main: {},
+  preload: {},
   renderer: {
     resolve: {
       alias: {

@@ -80,7 +80,12 @@ export default function App() {
     start(files, outputs)
   }, [files, outputs, start])
 
-  const canProcess = allReady && files.length > 0 && outputs.length > 0 && outputs.every((o) => o.outputDir) && !isProcessing
+  const canProcess =
+    allReady &&
+    files.length > 0 &&
+    outputs.length > 0 &&
+    outputs.every((o) => o.outputDir) &&
+    !isProcessing
 
   return (
     <div className="app">
@@ -92,7 +97,12 @@ export default function App() {
       <main className="app-main">
         <section className="input-section">
           <DropZone onFilesScanned={handleFilesScanned} disabled={isProcessing} />
-          <FileList files={files} onRemove={handleRemoveFile} onClear={handleClearFiles} disabled={isProcessing} />
+          <FileList
+            files={files}
+            onRemove={handleRemoveFile}
+            onClear={handleClearFiles}
+            disabled={isProcessing}
+          />
         </section>
 
         <section className="output-section">

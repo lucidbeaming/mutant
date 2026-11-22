@@ -54,11 +54,7 @@ export function DropZone({ onFilesScanned, disabled }: Props) {
       onDragLeave={() => setIsDragOver(false)}
       onDrop={handleDrop}
     >
-      {scanning ? (
-        <p>Scanning files...</p>
-      ) : (
-        <p>Drop files or folders here</p>
-      )}
+      {scanning ? <p>Scanning files...</p> : <p>Drop files or folders here</p>}
     </div>
   )
 }

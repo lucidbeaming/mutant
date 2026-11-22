@@ -35,8 +35,7 @@ export function listRecipes(): RecipeSummary[] {
 
 export function loadRecipe(id: string): OutputConfig[] | null {
   const row = db.prepare('SELECT outputs FROM recipes WHERE id = ?').get(id) as
-    | { outputs: string }
-    | undefined
+    { outputs: string } | undefined
   if (!row) return null
   const configs: OutputConfig[] = JSON.parse(row.outputs)
   return configs.map((c) => ({
@@ -52,8 +51,7 @@ export function saveRecipe(name: string, outputs: OutputConfig[]): string {
   const json = JSON.stringify(outputs)
 
   const existing = db.prepare('SELECT id FROM recipes WHERE name = ?').get(name) as
-    | { id: string }
-    | undefined
+    { id: string } | undefined
 
   if (existing) {
     db.prepare('UPDATE recipes SET outputs = ?, updated_at = ? WHERE id = ?').run(
@@ -65,13 +63,9 @@ export function saveRecipe(name: string, outputs: OutputConfig[]): string {
   }
 
   const id = randomUUID()
-  db.prepare('INSERT INTO recipes (id, name, outputs, created_at, updated_at) VALUES (?, ?, ?, ?, ?)').run(
-    id,
-    name,
-    json,
-    now,
-    now
-  )
+  db.prepare(
+    'INSERT INTO recipes (id, name, outputs, created_at, updated_at) VALUES (?, ?, ?, ?, ?)'
+  ).run(id, name, json, now, now)
   return id
 }
 

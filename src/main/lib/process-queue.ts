@@ -3,7 +3,12 @@ import { join, basename, extname } from 'path'
 import { access } from 'fs/promises'
 import { processImage } from '../services/image-processor'
 import { processVideo, processImageSequence } from '../services/video-processor'
-import type { MediaFile, OutputConfig, ProcessingProgress, FilenameOptions } from '../../shared/types'
+import type {
+  MediaFile,
+  OutputConfig,
+  ProcessingProgress,
+  FilenameOptions
+} from '../../shared/types'
 import { IMAGE_FORMATS } from '../../shared/types'
 
 let cancelled = false

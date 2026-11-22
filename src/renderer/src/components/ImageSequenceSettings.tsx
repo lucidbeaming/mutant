@@ -17,12 +17,7 @@ const DURATION_PRESETS = [
   { label: '10s', value: 10 }
 ]
 
-export function ImageSequenceSettings({
-  imageSequence,
-  format,
-  onChange,
-  disabled
-}: Props) {
+export function ImageSequenceSettings({ imageSequence, format, onChange, disabled }: Props) {
   const isVideo = VIDEO_FORMATS.includes(format)
   if (!isVideo) return null
 
