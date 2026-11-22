@@ -3,6 +3,9 @@ import type { OutputConfig } from '../../../shared/types'
 import { FormatSelector } from './FormatSelector'
 import { ResizeSettings } from './ResizeSettings'
 import { ColorSpaceSelector } from './ColorSpaceSelector'
+import { SpeedSettings } from './SpeedSettings'
+import { ImageSequenceSettings } from './ImageSequenceSettings'
+import { GlitchSelector } from './GlitchSelector'
 import { OutputDirPicker } from './OutputDirPicker'
 import { FilenameSettings } from './FilenameSettings'
 
@@ -24,6 +27,8 @@ export function OutputCard({ config, index, onUpdate, onRemove, canRemove, disab
         <span className="output-card-title">
           Output {index + 1}: {config.format.toUpperCase()}
           {config.resize.enabled && ` — ${config.resize.width}×${config.resize.height}`}
+          {config.speed?.enabled && config.speed.factor !== 1 && ` — ${config.speed.factor}x`}
+          {config.imageSequence?.enabled && ' — Sequence'}
         </span>
         <div className="output-card-actions">
           {canRemove && (
@@ -61,6 +66,27 @@ export function OutputCard({ config, index, onUpdate, onRemove, canRemove, disab
             colorSpace={config.colorSpace}
             format={config.format}
             onChange={(colorSpace) => onUpdate({ ...config, colorSpace })}
+            disabled={disabled}
+          />
+
+          <SpeedSettings
+            speed={config.speed}
+            format={config.format}
+            onChange={(speed) => onUpdate({ ...config, speed })}
+            disabled={disabled}
+          />
+
+          <ImageSequenceSettings
+            imageSequence={config.imageSequence}
+            format={config.format}
+            onChange={(imageSequence) => onUpdate({ ...config, imageSequence })}
+            disabled={disabled}
+          />
+
+          <GlitchSelector
+            glitch={config.glitch}
+            format={config.format}
+            onChange={(glitch) => onUpdate({ ...config, glitch })}
             disabled={disabled}
           />
 

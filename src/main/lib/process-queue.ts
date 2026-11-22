@@ -2,7 +2,7 @@ import { BrowserWindow } from 'electron'
 import { join, basename, extname } from 'path'
 import { access } from 'fs/promises'
 import { processImage } from '../services/image-processor'
-import { processVideo } from '../services/video-processor'
+import { processVideo, processImageSequence } from '../services/video-processor'
 import type { MediaFile, OutputConfig, ProcessingProgress, FilenameOptions } from '../../shared/types'
 import { IMAGE_FORMATS } from '../../shared/types'
 
@@ -90,7 +90,24 @@ export async function processQueue(
   mainWindow: BrowserWindow
 ): Promise<void> {
   cancelled = false
-  const totalOperations = files.length * outputs.length
+
+  const imageFiles = files.filter((f) => f.type === 'image')
+  const videoFiles = files.filter((f) => f.type === 'video')
+
+  // Calculate total operations accounting for image sequence batching
+  let totalOperations = 0
+  for (const output of outputs) {
+    const isImageOutput = IMAGE_FORMATS.includes(output.format)
+    if (!isImageOutput && output.imageSequence?.enabled && imageFiles.length > 0) {
+      // All images become one sequence operation
+      totalOperations += 1
+      // Video files still processed individually
+      totalOperations += videoFiles.length
+    } else {
+      totalOperations += files.length
+    }
+  }
+
   let completedOperations = 0
   let incrementCounter = 1
   const errors: ProcessingProgress['errors'] = []
@@ -109,10 +126,52 @@ export async function processQueue(
     mainWindow.webContents.send('processing:progress', progress)
   }
 
-  for (const file of files) {
+  for (const output of outputs) {
     if (cancelled) break
 
-    for (const output of outputs) {
+    const isImageOutput = IMAGE_FORMATS.includes(output.format)
+    const isSequenceMode = !isImageOutput && output.imageSequence?.enabled
+
+    // Handle image sequence: batch all images into one video
+    if (isSequenceMode && imageFiles.length > 0) {
+      const seqName = 'sequence'
+      const filename = buildFilename(seqName, output.filename, output.format, incrementCounter)
+      incrementCounter++
+
+      const outputDir = output.outputDir || join(imageFiles[0].path, '..')
+      let outputPath = join(outputDir, filename)
+      outputPath = await resolveCollision(outputPath)
+
+      sendProgress(`${imageFiles.length} images`, `${output.format} → ${filename}`)
+
+      try {
+        await processImageSequence(
+          imageFiles.map((f) => f.path),
+          outputPath,
+          output,
+          (pct) => {
+            sendProgress(
+              `${imageFiles.length} images`,
+              `${output.format} → ${filename} (${Math.round(pct)}%)`
+            )
+          }
+        )
+      } catch (err) {
+        errors.push({
+          file: `${imageFiles.length} images (sequence)`,
+          output: output.format,
+          error: err instanceof Error ? err.message : String(err)
+        })
+      }
+
+      completedOperations++
+      sendProgress(`${imageFiles.length} images`, `${output.format} → ${filename}`)
+    }
+
+    // Process individual files
+    const filesToProcess = isSequenceMode ? videoFiles : files
+
+    for (const file of filesToProcess) {
       if (cancelled) break
 
       const filename = buildFilename(file.name, output.filename, output.format, incrementCounter)
@@ -125,8 +184,6 @@ export async function processQueue(
       sendProgress(file.name, `${output.format} → ${filename}`)
 
       try {
-        const isImageOutput = IMAGE_FORMATS.includes(output.format)
-
         if (file.type === 'image' && isImageOutput) {
           await processImage(file.path, outputPath, output)
         } else if (file.type === 'video' && !isImageOutput) {
@@ -134,14 +191,12 @@ export async function processQueue(
             sendProgress(file.name, `${output.format} → ${filename} (${Math.round(pct)}%)`)
           })
         } else if (file.type === 'image' && !isImageOutput) {
-          // Skip: can't convert image to video format
           errors.push({
             file: file.name,
             output: output.format,
             error: 'Cannot convert image to video format'
           })
         } else {
-          // video → image: skip for now
           errors.push({
             file: file.name,
             output: output.format,
