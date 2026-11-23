@@ -62,3 +62,7 @@ npm run dist
 - **fluent-ffmpeg** for video processing
 - **gm** (GraphicsMagick/ImageMagick wrapper) for image processing
 - **better-sqlite3** for recipe storage
+
+## License
+
+[MIT](LICENSE).
