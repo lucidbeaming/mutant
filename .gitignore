@@ -14,7 +14,9 @@ dist/
 Thumbs.db
 
 # Editor
-.vscode/
+.vscode/*
+!.vscode/extensions.json
+*.sublime-workspace
 .idea/
 *.swp
 *.swo
@@ -23,10 +25,12 @@ Thumbs.db
 # Environment
 .env
 .env.*
+!.env.example
 
-# Logs
+# Logs and caches
 *.log
 npm-debug.log*
+.eslintcache
 
 # Electron
 release/
