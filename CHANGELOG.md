@@ -17,5 +17,8 @@ All notable changes to this project are documented here. The format follows [Kee
 - `electron.vite.config.ts` relies on electron-vite 6's default dependency externalizing (#2)
 - Source formatted with Prettier (#2)
 
+### Fixed
+- Dropping files or folders adds them again: the drop zone read `File.path`, which Electron 32 removed, so every drop was ignored. Paths now come from `webUtils.getPathForFile()` via the preload API (#8)
+
 ### Security
 - Resolved 1 critical and 25 high npm advisories (#2)

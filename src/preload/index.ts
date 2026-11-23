@@ -1,9 +1,11 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, webUtils } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import type { MediaFile, OutputConfig, ProcessingProgress, RecipeSummary } from '../shared/types'
 
 const api = {
   detectTools: () => ipcRenderer.invoke('tools:detect'),
+  // File.path was removed in Electron 32; webUtils is the replacement.
+  getPathForFile: (file: File) => webUtils.getPathForFile(file),
   scanFiles: (paths: string[]) => ipcRenderer.invoke('files:scan', paths),
   selectOutputDir: () => ipcRenderer.invoke('dialog:selectOutputDir'),
   startProcessing: (files: MediaFile[], outputs: OutputConfig[]) =>

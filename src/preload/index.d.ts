@@ -9,6 +9,7 @@ import type { ElectronAPI } from '@electron-toolkit/preload'
 
 interface MutantAPI {
   detectTools(): Promise<ToolStatus>
+  getPathForFile(file: File): string
   scanFiles(paths: string[]): Promise<MediaFile[]>
   selectOutputDir(): Promise<string | null>
   startProcessing(files: MediaFile[], outputs: OutputConfig[]): Promise<void>
