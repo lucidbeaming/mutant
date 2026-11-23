@@ -11,6 +11,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - ESLint and Prettier setup with `lint`, `lint:fix`, `format` and `format:check` scripts (#2)
 
 ### Changed
+- `.gitignore`: shared `.vscode/extensions.json`, Sublime workspaces, `.env.example`, `.eslintcache` (#6)
 - Electron 33 → 45, electron-builder 26, electron-vite 6, Vite 8, @vitejs/plugin-react 6 (#2)
 - better-sqlite3 11 → 13 (11.x no longer builds on Node 26), rebuilt for Electron 45 (#2)
 - `electron.vite.config.ts` relies on electron-vite 6's default dependency externalizing (#2)
