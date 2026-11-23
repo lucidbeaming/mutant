@@ -6,10 +6,6 @@ interface Props {
   disabled: boolean
 }
 
-interface ElectronFile extends File {
-  path: string
-}
-
 export function DropZone({ onFilesScanned, disabled }: Props) {
   const [isDragOver, setIsDragOver] = useState(false)
   const [scanning, setScanning] = useState(false)
@@ -23,9 +19,9 @@ export function DropZone({ onFilesScanned, disabled }: Props) {
 
       const paths: string[] = []
       for (const file of Array.from(e.dataTransfer.files)) {
-        const electronFile = file as ElectronFile
-        if (electronFile.path) {
-          paths.push(electronFile.path)
+        const filePath = window.api.getPathForFile(file)
+        if (filePath) {
+          paths.push(filePath)
         }
       }
 
