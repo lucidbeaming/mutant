@@ -5,6 +5,8 @@ All notable changes to this project are documented here. The format follows [Kee
 ## [Unreleased]
 
 ### Added
+- MIT license (#4)
+- Package metadata: `repository`, `bugs` and `homepage` in `package.json` (#4)
 - Ayu light theme, video glitch effects, speed control and image-sequence mode (#1)
 - ESLint and Prettier setup with `lint`, `lint:fix`, `format` and `format:check` scripts (#2)
 
