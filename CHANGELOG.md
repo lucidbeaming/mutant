@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-23
+
+First release: Electron 45, drag and drop working again (broken since Electron 32 removed `File.path`), speed and retiming, image-sequence mode and glitch effects, and a README with screenshots. There's no prebuilt app yet; build one with `npm run dist`.
+
 ### Added
 
 - README: screenshots, requirements (Node 20.19+/22.12+), retiming / image-sequence / glitch features, recipe storage location, build output, How it works, related projects (#10)
@@ -27,3 +31,6 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Security
 
 - Resolved 1 critical and 25 high npm advisories (#2)
+
+[Unreleased]: https://github.com/lucidbeaming/mutant/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/lucidbeaming/mutant/releases/tag/v1.0.0
