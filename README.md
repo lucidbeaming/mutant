@@ -2,6 +2,8 @@
 
 Desktop batch media converter built on ffmpeg and ImageMagick.
 
+Documentation: [joshuacurry.dev/mutant](https://joshuacurry.dev/mutant)
+
 ![Mutant's main window: three images and a video loaded in the file list, with one JPEG output configured and badges showing the detected ffmpeg and ImageMagick versions](docs/images/main-window.png)
 
 Drag and drop files or folders, configure one or more outputs (format, resize, color space, speed, glitch effects, naming), and process everything in one go. It uses your locally installed **ffmpeg** and **ImageMagick**, so there's nothing to upload and no bundled codecs.
